@@ -6,4 +6,4 @@ edition = "2024"
 [dependencies]
 rand = "0.8.3"
 # crossterm = "0.25"
-ncurses = "5.9"
+ncurses = {version = "5.9", features = ["wide"]}
