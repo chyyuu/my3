@@ -1,0 +1,9 @@
+[package]
+name = "my3"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rand = "0.8.3"
+# crossterm = "0.25"
+ncurses = "5.9"
