@@ -50,18 +50,18 @@ impl Game {
         erase();
         // 绘制边框和分数
         mvprintw(0, 0, &("┌".to_owned() + &"─".repeat(WIDTH as usize) + "┐"));
-        mvprintw(1, 0, &("│ 贪吃蛇游戏 - 分数: {:03} ".to_string() + &" ".repeat(WIDTH as usize - 17) + "│"));
+        mvprintw(1, 0, &format!("│ 贪吃蛇游戏 - 分数: {:03} {}", self.score, " ".repeat(WIDTH as usize -24) + "│"));
         mvprintw(2, 0, &("├".to_owned() + &"─".repeat(WIDTH as usize) + "┤"));
         
         for y in 0..HEIGHT {
             mvprintw((y + 3) as i32, 0, "│");
             for x in 0..WIDTH {
                 if self.snake.front() == Some(&(x, y)) {
-                    mvaddch((y + 3) as i32, (x + 1) as i32, '●' as u32); // 蛇头
+                    mvaddch((y + 3) as i32, (x + 1) as i32, 'O' as u32); // 蛇头
                 } else if self.snake.contains(&(x, y)) {
-                    mvaddch((y + 3) as i32, (x + 1) as i32, '○' as u32); // 蛇身
+                    mvaddch((y + 3) as i32, (x + 1) as i32, 'o' as u32); // 蛇身
                 } else if (x, y) == self.food {
-                    mvaddch((y + 3) as i32, (x + 1) as i32, '★' as u32); // 食物
+                    mvaddch((y + 3) as i32, (x + 1) as i32, '*' as u32); // 食物
                 }
             }
             mvprintw((y + 3) as i32, (WIDTH + 1) as i32, "│");
@@ -124,14 +124,17 @@ impl Game {
             KEY_RIGHT if self.direction != Direction::Left => {
                 self.direction = Direction::Right
             }
-            27 => self.game_over = true,
+            27 | 113 | 81 => self.game_over = true,
             _ => {}
         }
     }
 }
 
 fn main() {
-    // 初始化ncurses
+    //初始化ncurses
+    unsafe {
+        setlocale(LcCategory::all, "");
+    }
     initscr();
     cbreak();
     noecho();
@@ -156,7 +159,7 @@ fn main() {
 
     // 清理ncurses
     endwin();
-    println!("游戏结束! 最终分数: {}", game.score);
+    println!("游戏结束! ★  ●  ○ 最终分数: {}", game.score);
 }
 
 
