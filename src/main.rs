@@ -49,12 +49,12 @@ impl Game {
     fn draw(&self) {
         erase();
         // 绘制边框和分数
-        mvprintw(0, 0, "╔══════════════════════════════════════╗");
-        mvprintw(1, 0, &format!("║ 贪吃蛇游戏 - 分数: {:03}             ║", self.score));
-        mvprintw(2, 0, "╠══════════════════════════════════════╣");
+        mvprintw(0, 0, &("┌".to_owned() + &"─".repeat(WIDTH as usize) + "┐"));
+        mvprintw(1, 0, &("│ 贪吃蛇游戏 - 分数: {:03} ".to_string() + &" ".repeat(WIDTH as usize - 17) + "│"));
+        mvprintw(2, 0, &("├".to_owned() + &"─".repeat(WIDTH as usize) + "┤"));
         
         for y in 0..HEIGHT {
-            mvprintw((y + 3) as i32, 0, "║");
+            mvprintw((y + 3) as i32, 0, "│");
             for x in 0..WIDTH {
                 if self.snake.front() == Some(&(x, y)) {
                     mvaddch((y + 3) as i32, (x + 1) as i32, '●' as u32); // 蛇头
@@ -64,9 +64,9 @@ impl Game {
                     mvaddch((y + 3) as i32, (x + 1) as i32, '★' as u32); // 食物
                 }
             }
-            mvprintw((y + 3) as i32, (WIDTH + 1) as i32, "║");
+            mvprintw((y + 3) as i32, (WIDTH + 1) as i32, "│");
         }
-        mvprintw((HEIGHT + 3) as i32, 0, "╚══════════════════════════════════════╝");
+        mvprintw((HEIGHT + 3) as i32, 0, &("└".to_owned() + &"─".repeat(WIDTH as usize) + "┘"));
         mvprintw((HEIGHT + 4) as i32, 0, "控制: ↑ ↓ ← →  退出: ESC");
         refresh();
     }
