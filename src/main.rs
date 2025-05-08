@@ -132,9 +132,7 @@ impl Game {
 
 fn main() {
     //初始化ncurses
-    unsafe {
-        setlocale(LcCategory::all, "");
-    }
+    setlocale(LcCategory::all, "");    
     initscr();
     cbreak();
     noecho();
